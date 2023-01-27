@@ -115,7 +115,7 @@ export default function Home(props: any) {
             </Transition>
 
           </div>
-          <div className="space-x-4">
+          <div className="flex space-x-4">
           <Button label="Randomize" handleClick={setRandomAbility}></Button>
           <Button label="Submit" handleClick={checkInputtedAnswer}></Button>
           </div>
