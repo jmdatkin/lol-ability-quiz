@@ -64,6 +64,28 @@
   border-right: solid 1px pink;
 }
 
+.progressBar {
+}
+
+.progressBarProgress {
+  /* width: 50%; */
+  animation: progressBarTick 1s infinite linear alternate-reverse;
+  transition: width 0.5s ease;
+}
+
+.progressBarBg {
+  background-color: #2f0f3e;
+}
+
+@keyframes progressBarTick {
+  0% {
+    background-color: #ff0cb9;
+  }
+  100% {
+    background-color: #a60fa9;
+  }
+}
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
