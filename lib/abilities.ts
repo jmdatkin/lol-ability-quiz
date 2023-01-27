@@ -1,20 +1,8 @@
 import { connectToDatabase } from "./mongodb";
 import Cheerio from "cheerio";
 import axios from "axios";
-
-enum SkillSlot {
-    INNATE,
-    Q,
-    W,
-    E,
-    R
-};
-
-type Skill = {
-    champion: string,
-    name: string,
-    slot: SkillSlot
-};
+import { SkillSlot } from "types/SkillSlotSelect";
+import Ability from "types/Ability";
 
 const replacements = {
     'JarvanIV': 'Jarvan IV'
@@ -116,5 +104,14 @@ async function getAbilities() {
     const { database } = await connectToDatabase();
     return await database.collection('abilities').find().toArray();
 }
-// run().catch(console.dir);
-export { getAbilities, fetchAbilityData, fetchChampionNames };
+
+async function getChampionNames() {
+    const abilities = await getAbilities();
+    const champNames = await abilities.map((ability: Ability) => ability.champion);
+    const uniqueChampNames = await champNames.filter((item, pos, self) => {
+        return self.indexOf(item) === pos;
+    });
+    return uniqueChampNames.sort();
+};
+
+export { getAbilities, getChampionNames };
