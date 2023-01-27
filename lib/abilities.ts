@@ -14,7 +14,7 @@ async function fetchChampionNames() {
             'https://leagueoflegends.fandom.com/wiki/List_of_champions'
         );
         const $ = Cheerio.load(data);
-        const champs = [];
+        const champs: string[] = [];
 
         $('table.champions-list-legend + table').find('span.champion-icon > span > a').each((idx, el) => {
             let champName = $(el).html()?.replace(' ', '').split('<br>')[0];
