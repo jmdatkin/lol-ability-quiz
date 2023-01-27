@@ -21,7 +21,7 @@ export default function ComboBox(props) {
   return (
       <Combobox value={props.selectedChampion} onChange={props.setSelectedChampion}>
         <div className="relative mt-1">
-          <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left shadow-md text-2xl ring-4 ring-purple-600">
+          <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left shadow-md text-2xl ring-4 ring-purple-600 hover:bg-orange-400 hover:ring-orange-600">
             <Combobox.Input
               // className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
               className="w-full border-none outline-none py-4 pl-5 pr-10 ring"
@@ -38,7 +38,7 @@ export default function ComboBox(props) {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute max-h-60 mt-1 w-full text-left text-xl overflow-auto rounded-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Combobox.Options className="absolute max-h-60 mt-1 w-full text-left text-xl overflow-auto rounded-bl-md rounded-br-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {filteredItems.length === 0 && query !== '' ? (
                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                   Nothing found.
