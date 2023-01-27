@@ -66,12 +66,11 @@ export default function Home(props: any) {
 
     setAnswerStatus(answer);
 
-    if (answer) {
-      setNumCorrect(numCorrect + 1);
-      setRandomAbility()
-    }
-
     setNumGuesses(numGuesses + 1);
+    if (answer)
+      setNumCorrect(numCorrect + 1);
+
+    setRandomAbility()
 
     setShowAnswer(true);
     setTimeout(() => {
