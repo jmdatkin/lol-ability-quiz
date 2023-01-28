@@ -97,8 +97,8 @@ export default function Home(props: any) {
         onUpdate={setElapsedTime}
         />
         <main className={`${styles.main} ${poppins.className}`}>
-        <span class="text-lg text-white">{((elapsedTime*ROUND_LENGTH)/1000).toFixed(1)}</span>
-        <span class="text-lg text-white">{numCorrect}/{numGuesses} correct</span>
+        <span className="text-lg text-white">{((elapsedTime*ROUND_LENGTH)/1000).toFixed(1)}</span>
+        <span className="text-lg text-white">{numCorrect}/{numGuesses} correct</span>
         {/* <span class="text-lg text-white">{((elapsedTime*ROUND_LENGTH)/1000).toFixed(1)}</span> */}
           <div className={styles.header}>
             <h2 className={`${styles.abilityName} ${russoOne.className} font-medium text-6xl`}>

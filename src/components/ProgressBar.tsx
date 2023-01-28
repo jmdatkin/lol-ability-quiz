@@ -1,7 +1,7 @@
 import styles from '@/styles/Home.module.css'
 import { useEffect, useRef, useState } from 'react'
 
-const updateTick = 100;
+const updateTick = 50;
 
 type ProgressBarProps = {
     duration: number,

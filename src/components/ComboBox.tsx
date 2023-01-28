@@ -15,6 +15,7 @@ export default function ComboBox(props) {
           item
             .toLowerCase()
             .replace(/\s+/g, '')
+            .replace(/'/g, '')
             .includes(query.toLowerCase().replace(/\s+/g, ''))
         )
 
