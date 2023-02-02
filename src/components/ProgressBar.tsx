@@ -10,7 +10,7 @@ type ProgressBarProps = {
     onFinish: Function
 };
 
-export default function ProgressBar(props) {
+export default function ProgressBar(props: ProgressBarProps) {
 
     const [progress, setProgress] = useState(0.0);
 
@@ -21,13 +21,13 @@ export default function ProgressBar(props) {
 
     const iid = useRef(null);
 
-    const start = function() {
+    const start = function () {
         startTime.current = Date.now();
         iid.current = setInterval(() => {
             let diffTime = Date.now() - startTime.current;
             let percentage = diffTime / props.duration;
 
-            if (percentage > 1.0) 
+            if (percentage >= 1.0)
                 stop();
 
             setProgress(percentage);
@@ -38,15 +38,20 @@ export default function ProgressBar(props) {
         }, updateTick);
     };
 
-    const stop = function() {
+    const stop = function () {
         clearInterval(iid.current);
         if (props.onFinish)
             props.onFinish();
     }
 
     useEffect(() => {
-        if (progressBarRef.current !== null)
-            progressBarWidth.current = progressBarRef.current.getBoundingClientRect().width;
+        const resize = () => {
+            if (progressBarRef.current !== null)
+                progressBarWidth.current = progressBarRef.current.getBoundingClientRect().width;
+        };
+        resize();
+        window.addEventListener('resize', resize);
+        return () => {window.removeEventListener('resize',resize)}
     }, [progressBarRef]);
 
     useEffect(() => {
@@ -58,8 +63,8 @@ export default function ProgressBar(props) {
 
     return (
         <div ref={progressBarRef} className={`${styles.progressBar} fixed w-full h-4`}>
-           <div className={`${styles.progressBarBg} fixed w-full h-4 `}></div> 
-           <div style={{'width': progress*progressBarWidth.current}} className={`${styles.progressBarProgress} fixed h-4 `}></div> 
+            <div className={`${styles.progressBarBg} fixed w-full h-4 `}></div>
+            <div style={{ 'width': progress * progressBarWidth.current }} className={`${styles.progressBarProgress} fixed h-4 `}></div>
         </div>
     )
 }

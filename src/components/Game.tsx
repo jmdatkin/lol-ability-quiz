@@ -66,9 +66,9 @@ export default function Game(props) {
     return (
         <div className="w-full h-full">
             <ProgressBar key={progressBarKey} active={true} duration={ROUND_LENGTH}
-                onUpdate={setElapsedTime}
+                onUpdate={setElapsedTime} onFinish={props.onFinish}
             />
-            <main className={`${styles.main} ${poppins.className}`}>
+            <main className={`${styles.main}`}>
                 <span className="text-lg text-white">{((elapsedTime * ROUND_LENGTH) / 1000).toFixed(1)}</span>
                 <span className="text-lg text-white">{numCorrect}/{numGuesses} correct</span>
                 {/* <span class="text-lg text-white">{((elapsedTime*ROUND_LENGTH)/1000).toFixed(1)}</span> */}
