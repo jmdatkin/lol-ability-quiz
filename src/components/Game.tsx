@@ -148,7 +148,6 @@ export default function Game(props) {
                 </div>
                 <div className="flex space-x-4">
                     {/* <Button label="Randomize" handleClick={setRandomAbility}></Button> */}
-                    <Button label="Begin Round" handleClick={beginRound}></Button>
                     <Button label="Submit" handleClick={checkInputtedAnswer}></Button>
                 </div>
             </main>

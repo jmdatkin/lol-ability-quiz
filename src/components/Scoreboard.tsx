@@ -1,9 +1,21 @@
+import { useRef } from "react";
 
 export default function Scoreboard(props) {
 
-    const SlotKeys = [
+    const SlotKeys = useRef([
         'Passive','Q','W','E','R'
-    ];
+    ]);
+
+    const correctRatio = useRef(props.numCorrect/props.numGuesses);
+
+    const messagePrefix = function() {
+        return correctRatio.current >= 1.0 ? 'Congratulations!' :
+        correctRatio.current >= 0.66 ? 'Nice job!' :
+        correctRatio.current >= 0.5 ? 'Okay!' :
+        correctRatio.current >= 0.33 ? 'Uh oh!' :
+        correctRatio.current >= 0.25 ? 'Yikes!':
+        'Hmmm...';
+    };
 
     return (
         // <div className="scoreboard-wrapper absolute w-full h-full">
@@ -12,7 +24,7 @@ export default function Scoreboard(props) {
         //     </div>
         // </div>
         <div className="scoreboard w-full h-full md:w-1/2 md:h-auto rounded-lg ring-4 ring-purple-600 p-8 bg-purple-700 text-white flex flex-col">
-            <span className="mb-4">Out of {props.numGuesses} guesses, you got {props.numCorrect} correct.</span>
+            <span className="mb-4">{messagePrefix()} Out of {props.numGuesses} {props.numGuesses == 1 ? 'guess' : 'guesses'}, you got {props.numCorrect} correct.</span>
             <div className="guesses-table">
                 <table className="table-auto border-collapse w-full mb-4">
                     <thead>
@@ -32,12 +44,12 @@ export default function Scoreboard(props) {
                             </td>
                             <td className="border">
                                 <span>
-                                    {guess.playerGuess.championName} {SlotKeys[guess.playerGuess.skillSlot]}
+                                    {guess.playerGuess.championName} {SlotKeys.current[guess.playerGuess.skillSlot]}
                                 </span>
                             </td>
                             <td className="border">
                                 <span>
-                                    {guess.correctGuess.championName} {SlotKeys[guess.correctGuess.skillSlot]}
+                                    {guess.correctGuess.championName} {SlotKeys.current[guess.correctGuess.skillSlot]}
                                 </span>
                             </td>
                         </tr>)
