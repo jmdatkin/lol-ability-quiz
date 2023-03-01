@@ -11,7 +11,7 @@ export default function Scoreboard(props) {
         //     <div className="scoreboard fixed padding-6 items-center">
         //     </div>
         // </div>
-        <div className="scoreboard w-1/2 rounded-lg ring-4 ring-purple-600 p-8 bg-purple-700 text-white flex flex-col">
+        <div className="scoreboard w-full h-full md:w-1/2 md:h-auto rounded-lg ring-4 ring-purple-600 p-8 bg-purple-700 text-white flex flex-col">
             <span className="mb-4">Out of {props.numGuesses} guesses, you got {props.numCorrect} correct.</span>
             <div className="guesses-table">
                 <table className="table-auto border-collapse w-full mb-4">
