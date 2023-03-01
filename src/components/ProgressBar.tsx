@@ -60,13 +60,8 @@ export default function ProgressBar(props: ProgressBarProps) {
     }, [progressBarRef]);
 
     useEffect(() => {
-        console.log("Salty start");
         start();
-        // return () => {
-        //     console.log("Meep");
-        //     stop();
-        // }
-    }, []);
+    }, [start]);
 
     return (
         <div ref={progressBarRef} className={`${styles.progressBar} fixed w-full h-4`}>

@@ -61,7 +61,7 @@ export default function Home(props: any) {
               <div>
                 <Intro>
                   <Button label="Start Game" handleClick={start}>Start Game</Button>
-                  <span>Created by <a target="_blank" href="https://jmdatkin.github.io">Julian Atkin</a></span>
+                  <span>Created by <a target="_blank" rel="noreferrer" href="https://jmdatkin.github.io">Julian Atkin</a></span>
                 </Intro>
               </div>
             </>

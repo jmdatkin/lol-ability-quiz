@@ -87,7 +87,7 @@ export default function Game(props) {
 
     useEffect(() => {
         setRandomAbility();
-    }, []);
+    }, [setRandomAbility]);
 
 
     return (
