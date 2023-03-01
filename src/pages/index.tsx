@@ -4,11 +4,12 @@ import { getAbilities, getChampionNames } from 'lib/abilities'
 import Game from '@/components/Game'
 import { Poppins, Press_Start_2P } from '@next/font/google';
 import Intro from '@/components/Intro';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '@/components/Button';
 import { CSSTransition } from 'react-transition-group';
 import Main from '@/components/Main';
 import { Transition } from '@headlessui/react';
+import Scoreboard from '@/components/Scoreboard';
 
 const poppins = Poppins({ weight: ['600'], subsets: ['latin'] });
 
@@ -26,13 +27,19 @@ export async function getStaticProps() {
 export default function Home(props: any) {
 
   const [started, setStarted] = useState(false)
+  const [finished, setFinished] = useState(false);
+
+  const gameRef = useRef(null);
+  const introRef = useRef(null);
+
+  const scoreboardRef = useRef(null);
 
   const start = function () {
     setStarted(true);
   }
 
-  const onGameFinish = function(score) {
-    console.log("Boof");
+  const onGameFinish = function (score) {
+    setFinished(true);
   };
 
   return (
@@ -48,22 +55,18 @@ export default function Home(props: any) {
         </div>
 
         <div>
-          {/* <Main abilities={props.abilities} champions={props.champions} started={started}></Main> */}
-          {/* <Game abilities={props.abilities} champions={props.champions} /> */}
-          {/* {<Intro start={start}></Intro>} */}
-
-          {/* <CSSTransition> */}
           {started ?
             <Game abilities={props.abilities} champions={props.champions} onFinish={onGameFinish} /> :
             <>
-              <Button label="Start Game" handleClick={start}>Start Game</Button>
-              <Intro></Intro>
+              <div>
+                <Intro>
+                  <Button label="Start Game" handleClick={start}>Start Game</Button>
+                  <span>Created by <a target="_blank" href="https://jmdatkin.github.io">Julian Atkin</a></span>
+                </Intro>
+              </div>
             </>
           }
-          {/* </CSSTransition> */}
-
         </div>
-
       </div>
     </>
   )

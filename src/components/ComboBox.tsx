@@ -21,7 +21,7 @@ export default function ComboBox(props) {
 
   return (
       <Combobox value={props.selectedChampion} onChange={props.setSelectedChampion}>
-        <div className="relative mt-1">
+        <div className="relative mt-1 w-full">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left shadow-md text-2xl ring-4 ring-purple-600 hover:bg-orange-400 hover:ring-orange-600">
             <Combobox.Input
               // className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"

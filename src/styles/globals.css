@@ -109,6 +109,12 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  color: #bbb;
+}
+
 input {
   background-color: #744adb2e;
   color: #fff;

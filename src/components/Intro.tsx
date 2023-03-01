@@ -8,6 +8,7 @@ export default function Intro(props) {
     return (
             <main className={`${styles.main}`}>
                 <h3 className={`${pressStart2P.className} text-2xl`}>League of Legends Ability Quiz</h3>
+                {props.children}
             </main>
     )
 }
