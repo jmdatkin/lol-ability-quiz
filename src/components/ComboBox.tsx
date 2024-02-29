@@ -1,12 +1,12 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
+import levenshtein from "fast-levenshtein";
 
 export default function ComboBox(props) {
   const items = props.items;
 
   const [selected, setSelected] = useState(items[0])
   const [query, setQuery] = useState('')
-
 
   const filteredItems =
     query === ''
@@ -16,8 +16,25 @@ export default function ComboBox(props) {
             .toLowerCase()
             .replace(/\s+/g, '')
             .replace(/'/g, '')
-            .includes(query.toLowerCase().replace(/\s+/g, ''))
+            .includes(query.toLowerCase().replace(/\s+/g, '').replace(/'/g, ''))
         )
+        .toSorted((a,b) => {
+          const q = query.toLowerCase().replace(/\s+/g,'');
+          // console.log(q,a,b)
+          return q.indexOf(b.toLowerCase()) - q.indexOf(a.toLowerCase());
+        });
+
+  // const filteredItems = useMemo(() => {
+  //   return items.toSorted((a,b) => {
+  //     return levenshtein.get(query, a) < levenshtein.get(query, b);
+  //   })
+  // }, [query]);
+
+  // const filteredItems = query === "" ? items : items.toSorted((a,b) => {
+  //     let _a = levenshtein.get(query, a);
+  //     let _b = levenshtein.get(query, b);
+  //     return _a - _b;
+  //   });
 
   return (
       <Combobox value={props.selectedChampion} onChange={props.setSelectedChampion}>
@@ -39,7 +56,7 @@ export default function ComboBox(props) {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute max-h-60 mt-1 w-full text-left text-xl overflow-auto rounded-bl-md rounded-br-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Combobox.Options className="absolute bg-purple-900  max-h-60 mt-1 w-full text-left text-xl overflow-auto rounded-bl-md rounded-br-md py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {filteredItems.length === 0 && query !== '' ? (
                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                   Nothing found.

@@ -16,7 +16,8 @@ async function fetchChampionNames() {
         const $ = Cheerio.load(data);
         const champs: string[] = [];
 
-        $('table.champions-list-legend + table').find('span.champion-icon > span > a').each((idx, el) => {
+        // $('table.champions-list-legend + table').find('span.champion-icon > span > a').each((idx, el) => {
+        $('span.champion-icon > span > a').each((idx, el) => {
             let champName = $(el).html()?.replace(' ', '').split('<br>')[0];
             champs.push(replacements.hasOwnProperty(champName) ? replacements[champName] : champName);
         });
@@ -94,12 +95,6 @@ async function syncAbilities() {
     }
 }
 
-async function test() {
-    const { database } = await connectToDatabase();
-
-    await database.collection('abilities').insertOne({ name: 'beef' });
-}
-
 async function getAbilities() {
     const { database } = await connectToDatabase();
     return await database.collection('abilities').find().toArray();
@@ -114,4 +109,4 @@ async function getChampionNames() {
     return uniqueChampNames.sort();
 };
 
-export { getAbilities, getChampionNames };
+export { getAbilities, getChampionNames, fetchAbilityData, fetchChampionNames };

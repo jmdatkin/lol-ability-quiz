@@ -10,13 +10,15 @@ import { Transition } from '@headlessui/react'
 import Button from './Button'
 import ProgressBar from './ProgressBar'
 import Scoreboard from './Scoreboard'
+import useProgressBar from '@/hooks/useProgressBar'
 
-const ROUND_LENGTH = 30000;
+// const ROUND_LENGTH = 30000;
+const ROUND_LENGTH = 15000;
 
 const poppins = Poppins({ weight: ['600'], subsets: ['latin'] });
 const russoOne = Russo_One({ weight: ['400'], subsets: ['latin'] });
 
-export default function Game(props) {
+export default function Game(props: {champions: string[], abilities: Ability[]}) {
     const [selectedAbility, setSelectedAbility] = useState({});
     const [selectedChampion, setSelectedChampion] = useState(props.champions[0])
     const [selectedSkillSlot, setSelectedSkillSlot] = useState(SkillSlot.INNATE);
@@ -31,11 +33,22 @@ export default function Game(props) {
     const numGuessesRef = useRef(0);
     const numCorrectRef = useRef(0);
 
+    const [elapsedTime, setElapsedTime] = useState(0.0);
+
+    const progressFinishHandler = () => {
+        checkInputtedAnswer();
+    }
+
+    const { ref: progressBarRef, progress, progressBarWidth, start, stop} = useProgressBar({
+        duration: ROUND_LENGTH,
+        onUpdate: setElapsedTime,
+        onFinish: progressFinishHandler
+    })
+
     const guesses = useRef([]);
 
     const [progressBarKey, setProgressBarKey] = useState(0);
 
-    const [elapsedTime, setElapsedTime] = useState(0.0);
 
     const setRandomAbility = function () {
         setSelectedAbility(props.abilities[Math.floor(Math.random() * props.abilities.length)]);
@@ -59,13 +72,14 @@ export default function Game(props) {
 
         setAnswerStatus(answer);
 
-        setNumGuesses(numGuesses + 1);
+        setNumGuesses((prev) => prev + 1);
         numGuessesRef.current += 1;
         if (answer) {
-            setNumCorrect(numCorrect + 1);
+            setNumCorrect((prev) => prev + 1);
             numCorrectRef.current += 1;
         }
 
+        start();
         setRandomAbility()
 
         setShowAnswer(true);
@@ -74,21 +88,16 @@ export default function Game(props) {
         }, 3000);
     };
 
-    const getGuesses = function () {
-        return {
-            get numGuesses() {
-                return numGuesses
-            },
-            get numCorrect() {
-                return numCorrect
-            }
-        };
-    };
-
     useEffect(() => {
         setRandomAbility();
     }, []);
 
+    useEffect(() => {
+        if (numGuesses >= 10) {
+            // props.onFinish(setFinished(true));
+            setFinished(true);
+        }
+    }, [numGuesses])
 
     return (
         <div className="w-full h-full">
@@ -99,9 +108,13 @@ export default function Game(props) {
                     </Scoreboard>
                 </div>
             : <></>}
-            <ProgressBar key={progressBarKey} active={true} duration={ROUND_LENGTH}
-                onUpdate={setElapsedTime} onFinish={() => props.onFinish(setFinished(true))}
-            />
+            {/* <ProgressBar key={progressBarKey} active={true} duration={ROUND_LENGTH}
+                onUpdate={setElapsedTime} onFinish={progressFinishHandler}
+            />*/} 
+  <div ref={progressBarRef} className={`${styles.progressBar} fixed w-full h-4`}>
+            <div className={`${styles.progressBarBg} fixed w-full h-4 `}></div>
+            <div style={{ 'width': progress * progressBarWidth.current }} className={`${styles.progressBarProgress} fixed h-4 `}></div>
+        </div>
             <main className={`${styles.main}`}>
                 <span className="text-lg text-white">{((elapsedTime * ROUND_LENGTH) / 1000).toFixed(1)}</span>
                 <span className="text-lg text-white">{numCorrect}/{numGuesses} correct</span>
